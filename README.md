@@ -63,3 +63,6 @@ python txt2img_webui.py
 Open http://127.0.0.1:7860 in your browser.
 
 ![txt2img_webui screenshot](./screenshots/txt2img-screenshot.jpg)
+
+> **WARNIN:** `width` & `height` must be multiples of `8` or the WebUI will
+> crash.
