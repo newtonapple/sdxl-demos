@@ -1,0 +1,9 @@
+# Base requirements
+diffusers[torch]
+transformers[torch]
+invisible_watermark
+accelerate
+safetensors
+gradio
+
+

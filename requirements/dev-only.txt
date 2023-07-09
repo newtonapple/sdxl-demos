@@ -1,0 +1,7 @@
+black
+debugpy
+mypy
+ruff
+pyright
+jupyter
+jupyter_contrib_nbextensions
