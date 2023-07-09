@@ -29,7 +29,7 @@ pip install -r requirement.txt
 Or with development dependencies:
 
 ```
-pip install -r dev.txt
+pip install -r requirements/dev.txt
 ```
 
 ### MacOS Installation
@@ -61,4 +61,5 @@ python txt2img_webui.py
 ```
 
 Open http://127.0.0.1:7860 in your browser.
+
 ![txt2img_webui screenshot](./screenshots/txt2img-screenshot.jpg)
