@@ -10,7 +10,11 @@ def torch_device():
     return "cpu"
 
 
-def pipeline(model="stabilityai/stable-diffusion-xl-base-0.9", device=torch_device()):
+def pipeline(
+    model="stabilityai/stable-diffusion-xl-base-0.9",
+    device=torch_device(),
+    watermark=False,
+):
     torch_dtype = torch.float16
     variant = "fp16"
 
@@ -34,4 +38,14 @@ def pipeline(model="stabilityai/stable-diffusion-xl-base-0.9", device=torch_devi
     # 20-30% inference speed up for torch >= 2.0
     pipe.unit = torch.compile(pipe.unet, mode="reduce-overhead", fullgraph=True)
 
+    # mock out watermark, as it introduces undesirable pixels:
+    # https://github.com/huggingface/diffusers/issues/4014
+    if not watermark:
+        pipe.watermark = NoWatermark()
+
     return pipe
+
+
+class NoWatermark:
+    def apply_watermark(self, img):
+        return img
