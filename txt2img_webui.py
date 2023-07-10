@@ -6,7 +6,10 @@ import gradio as gr
 
 class WebUI:
     def __init__(self):
-        self.pipeline = utils.pipeline()
+        self.pipeline = utils.pipeline(model="stabilityai/stable-diffusion-xl-base-0.9")
+        self.refiner = utils.pipeline(
+            model="stabilityai/stable-diffusion-xl-refiner-0.9"
+        )
 
         inputs = [
             gr.Textbox(),  # prompt
@@ -47,7 +50,7 @@ class WebUI:
                 for s in seeds
             ]
 
-        output = self.pipeline(
+        latent_image = self.pipeline(
             prompt=prompt,
             negative_prompt=negative_prompt,
             generator=generator,
@@ -56,8 +59,20 @@ class WebUI:
             num_inference_steps=steps,
             guidance_scale=guidance_scale,
             num_images_per_prompt=num_images_per_prompt,
-        )
-        return [[i[1], seeds[i[0]]] for i in enumerate(output.images)]
+            output_type="latent",
+        ).images
+
+        images = self.refiner(
+            prompt=prompt,
+            negative_prompt=negative_prompt,
+            generator=generator,
+            num_inference_steps=steps,
+            guidance_scale=guidance_scale,
+            num_images_per_prompt=num_images_per_prompt,
+            image=latent_image,
+        ).images
+
+        return [[i[1], seeds[i[0]]] for i in enumerate(images)]
 
     def launch(self, *args, **kwargs):
         self.webui.launch(*args, **kwargs)

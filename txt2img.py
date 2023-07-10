@@ -4,7 +4,9 @@ import sys
 if __name__ == "__main__":
     prompt = sys.argv[1]
     outfile = sys.argv[2]
-    pipe = utils.pipeline()
+    base_pipe = utils.pipeline(model="stabilityai/stable-diffusion-xl-base-0.9")
+    refiner_pipe = utils.pipeline(model="stabilityai/stable-diffusion-xl-refiner-0.9")
 
-    image = pipe(prompt=prompt).images[0]
+    images = base_pipe(prompt=prompt, output_type="latent").images
+    image = refiner_pipe(prompt=prompt, image=images).images[0]
     image.save(outfile)
