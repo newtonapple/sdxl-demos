@@ -1,15 +1,13 @@
-import utils
 import torch
 import random
 import gradio as gr
+from sdxl import pipeline
 
 
 class WebUI:
     def __init__(self):
-        self.pipeline = utils.pipeline(model="stabilityai/stable-diffusion-xl-base-0.9")
-        self.refiner = utils.pipeline(
-            model="stabilityai/stable-diffusion-xl-refiner-0.9"
-        )
+        self.pipeline = pipeline(model="stabilityai/stable-diffusion-xl-base-0.9")
+        self.refiner = pipeline(model="stabilityai/stable-diffusion-xl-refiner-0.9")
 
         inputs = [
             gr.Textbox(),  # prompt
