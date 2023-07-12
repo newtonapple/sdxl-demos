@@ -54,10 +54,22 @@ CLI:
 python txt2img.py 'an italian chef making pizzas' images/pizza-making.png
 ```
 
+low VRAM mode:
+
+```
+python txt2img.py 'an italian chef making pizzas' images/pizza-making.png -l
+```
+
 [Gradio WebUI](https://www.gradio.app/):
 
 ```
 python txt2img_webui.py
+```
+
+low VRAM mode:
+
+```
+python txt2img_webui.py -p 7860 -l
 ```
 
 Open http://127.0.0.1:7860 in your browser.
